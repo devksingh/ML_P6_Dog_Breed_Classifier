@@ -13170,7 +13170,11 @@ Pa7H9XiocW0srsf1uB4PNa6NxfW4Htfjocb/A0N7vC4eL9zMAAAAAElFTkSuQmCC
 <li>What percentage of the first 100 images in <code>dog_files</code> have a detected human face? </li>
 </ul>
 <p>Ideally, we would like 100% of human images with a detected face and 0% of dog images with a detected face.  You will see that our algorithm falls short of this goal, but still gives acceptable performance.  We extract the file paths for the first 100 images from each of the datasets and store them in the numpy arrays <code>human_files_short</code> and <code>dog_files_short</code>.</p>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> 
+<br>
+Percentage detected as a human on human_files_short dataset is 99%
+<br>
+Percentage detected as a human on dog_files_short dataset is 11%</p>
 
 </div>
 </div>
@@ -13232,7 +13236,10 @@ Percentage of dog faces misclassified by function as human: 11.0%
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Question 2:</strong> This algorithmic choice necessitates that we communicate to the user that we accept human images only when they provide a clear view of a face (otherwise, we risk having unneccessarily frustrated users!). In your opinion, is this a reasonable expectation to pose on the user? If not, can you think of a way to detect humans in images that does not necessitate an image with a clearly presented face?</p>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong>
+<br>
+As from the model is predicting with 99% accuracy for human images and only 1% is wrongly detected. I guess the images entirely not visible are detected as dogs. However we can not generalize this and may resulty in less accuracy for different set. It is always advisable to use deep learning algorithm to differentiate minute features too. Like for a given image whether it is dog or human and I tried few human images which were not detected as human. The conclusion is it can be used if we are not looking for higher accuracy but deep learning cnn models are always advisable.
+<br></p>
 <p>We suggest the face detector from OpenCV as a potential way to detect human images in your algorithm, but you are free to explore other approaches, especially approaches that make use of deep learning :).  Please use the code cell below to design and test your own face detection algorithm.  If you decide to pursue this <em>optional</em> task, report performance on each of the datasets.</p>
 
 </div>
@@ -13392,7 +13399,11 @@ $$</p>
 <li>What percentage of the images in <code>human_files_short</code> have a detected dog?  </li>
 <li>What percentage of the images in <code>dog_files_short</code> have a detected dog?</li>
 </ul>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> 
+<br>
+Percentage of dog faces correctly classified: 100.0%
+<br>
+Percentage of human faces misclassified by model as Dog: 0.0%</p>
 
 </div>
 </div>
@@ -14215,7 +14226,14 @@ test_{network} = bottleneck_features['test']</code></pre>
 <p><strong>Question 5:</strong> Outline the steps you took to get to your final CNN architecture and your reasoning at each step.  Describe why you think the architecture is suitable for the current problem.</p>
 <p><strong>Answer:</strong> 
 <br>
-I tried all the 4 models (VGG-19, ResNet50, Inception and Xception) and I got accuracy of 51% with VGG-19, 82% with ResNet50, 83% with Inception and 85% with Xception. So Xception was the obvious choice for this problem.</p>
+I tried all the 4 models (VGG-19, ResNet50, Inception and Xception) and I got accuracy of 51% with VGG-19, 82% with ResNet50, 83% with Inception and 85% with Xception. So Xception was the obvious choice for this problem.
+<br>
+A better approach always is to leverage a network pre-trained on a large dataset. Such a network would have already learned features that are useful for most computer vision problems, and leveraging such features would allow us to reach a better accuracy than any method that would only rely on the available data.
+<br>
+We will use the xception architecture, pre-trained on the ImageNet dataset. Because the ImageNet dataset contains several classes among its total of 1000 classes, this model will already have learned features that are relevant to our classification problem.
+<br>
+Xception was proposed by none other than François Chollet himself, the creator and chief maintainer of the Keras library.
+Xception is an extension of the Inception architecture which replaces the standard Inception modules with depthwise separable convolutions.</p>
 
 </div>
 </div>
@@ -14564,7 +14582,17 @@ Epoch 10/10
 <h3 id="(IMPLEMENTATION)-Test-Your-Algorithm-on-Sample-Images!">(IMPLEMENTATION) Test Your Algorithm on Sample Images!<a class="anchor-link" href="#(IMPLEMENTATION)-Test-Your-Algorithm-on-Sample-Images!">&#182;</a></h3><p>Test your algorithm at least six images on your computer.  Feel free to use any images you like.  Use at least two human and two dog images.</p>
 <p><strong>Question 6:</strong> Is the output better than you expected :) ?  Or worse :( ?  Provide at least three possible points of improvement for your algorithm.</p>
 <p><strong>Answer:</strong> 
-I am really happy with the result. It's 100% accurate in identifying dog breeds. It has also identified non human and dog images. I had one image of river and one image of tree and it correctly identified that it's not human or dog. It identified breed of all the 3 dog images and idennfied human images as closest dog breed they look like.</p>
+I am really happy with the result. It's 100% accurate in identifying dog breeds. It has also identified non human and dog images. I had one image of river and one image of tree and it correctly identified that it's not human or dog. It identified breed of all the 3 dog images and idennfied human images as closest dog breed they look like.
+<br>
+To further improve:
+<br></p>
+<ol>
+<li>We can try to "fine-tune" the last convolutional block of the Xception model alongside the top-level classifier.
+<br></li>
+<li>We could have added human images and add more class as human in training, so that model could identify non-dog images as well.
+<br></li>
+<li>We could have tried adding more layers at the bottom and could have tuned learning rate as well.</li>
+</ol>
 
 </div>
 </div>
